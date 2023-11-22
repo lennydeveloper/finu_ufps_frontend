@@ -1,35 +1,52 @@
-# finu_ufps_frontend
+# V-Dashboard
 
-This template should help get you started developing with Vue 3 in Vite.
+Dashboard starter template built with Vite, Vue 3, Tailwind CSS and TypeScript.
 
-## Recommended IDE Setup
+Copied from https://github.com/tailwindcomponents/dashboard and converted to Vue.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Demo
 
-## Customize configuration
+https://v-dashboard.vercel.app/
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+![Demo](https://i.imgur.com/RqXxEHL.gif)
 
-## Project Setup
+Note if you have access to [Tailwind UI](https://tailwindui.com), you can follow the following steps to add it:
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
+1. Install `@tailwindcss/ui`:
 
 ```sh
-npm run dev
+pnpm add @tailwindcss/ui
 ```
 
-### Compile and Minify for Production
+2. Add the plugin in `tailwind.config.js` without changing anything else:
 
-```sh
-npm run build
+```js
+// tailwind.config.js
+module.exports = {
+  // ...
+  // rest of the config
+  plugins: [require('@tailwindcss/ui')],
+}
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Project setup
 
-```sh
-npm run lint
 ```
+pnpm install
+```
+
+### Compiles and hot-reloads for development
+
+```
+pnpm dev
+```
+
+### Compiles and minifies for production
+
+```
+pnpm build
+```
+
+## License & copyright
+
+Licensed under the [MIT License](LICENSE.md).
