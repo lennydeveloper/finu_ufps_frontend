@@ -3,13 +3,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Dashboard from './views/Dashboard.vue'
 import Forms from './views/Forms.vue'
-import Tables from './views/Tables.vue'
-import UIElements from './views/UIElements.vue'
+import Proyectos from './views/Proyectos.vue'
+// import UIElements from './views/UIElements.vue'
 import Login from './views/Login.vue'
 import Modal from './views/Modal.vue'
 import Card from './views/Card.vue'
 import Blank from './views/Blank.vue'
-//import BarChart from './components/PieChart.vue'
+import Convocatorias from './views/Convocatorias.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard,
+    component: Blank,
   },
   {
     path: '/forms',
@@ -34,14 +34,14 @@ const routes: RouteRecordRaw[] = [
     component: Card,
   },
   {
-    path: '/tables',
-    name: 'Tables',
-    component: Tables,
+    path: '/proyectos',
+    name: 'Proyectos',
+    component: Proyectos,
   },
   {
-    path: '/ui-elements',
-    name: 'UIElements',
-    component: UIElements,
+    path: '/convocatorias',
+    name: 'Convocatorias',
+    component: Convocatorias,
   },
   {
     path: '/modal',
@@ -51,7 +51,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/blank',
     name: 'Blank',
-    component: Blank,
+    component: Dashboard,
   },
 ]
 

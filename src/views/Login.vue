@@ -96,5 +96,3 @@ function login() {
     background-color: #c9302c !important;
   }
 </style>
-
-sty

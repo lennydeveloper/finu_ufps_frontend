@@ -8,11 +8,12 @@ const { isOpen } = useSidebar()
 
 <template>
   <header
-    class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600"
+    class="flex items-center justify-between px-6 py-4"
+    style="background-color: #DD4B39 !important;"
   >
     <div class="flex items-center">
       <button
-        class="text-gray-500 focus:outline-none lg:hidden"
+        class="text-white focus:outline-none lg:hidden"
         @click="isOpen = true"
       >
         <svg
@@ -31,7 +32,7 @@ const { isOpen } = useSidebar()
         </svg>
       </button>
 
-      <div class="relative mx-4 lg:mx-0">
+      <!-- <div class="relative mx-4 lg:mx-0">
         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
           <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
             <path
@@ -49,11 +50,11 @@ const { isOpen } = useSidebar()
           type="text"
           placeholder="Search"
         >
-      </div>
+      </div> -->
     </div>
 
     <div class="flex items-center">
-      <button class="flex mx-4 text-gray-600 focus:outline-none">
+      <button class="flex mx-4 text-white focus:outline-none">
         <svg
           class="w-6 h-6"
           viewBox="0 0 24 24"
@@ -120,3 +121,9 @@ const { isOpen } = useSidebar()
     </div>
   </header>
 </template>
+
+<style>
+  .bg-finu-red {
+    background-color: "#DD4B39" !important;
+  }
+</style>

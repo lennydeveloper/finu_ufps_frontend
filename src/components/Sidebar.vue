@@ -4,10 +4,10 @@ import { useSidebar } from '../composables/useSidebar'
 
 const { isOpen } = useSidebar()
 const activeClass = ref(
-  'bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100',
+  'bg-gray-600 border-gray-600 bg-opacity-25 text-gray-800',
 )
 const inactiveClass = ref(
-  'border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100',
+  'border-white text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-800 hover:border-white    ',
 )
 </script>
 
@@ -23,9 +23,9 @@ const inactiveClass = ref(
 
     <div
       :class="isOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-      class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0"
+      class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-white lg:translate-x-0 lg:static lg:inset-0"
     >
-      <div class="flex items-center justify-center mt-8">
+      <div class="flex items-center justify-around mt-8">
         <div class="flex items-center">
           <svg
             class="w-12 h-12"
@@ -47,7 +47,7 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-2 text-2xl font-semibold text-white">V-Dashboard</span>
+          <span class="mx-2 text-2xl font-extrabold text-black">FINU UFPS</span>
         </div>
       </div>
 
@@ -78,8 +78,8 @@ const inactiveClass = ref(
 
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'UIElements' ? activeClass : inactiveClass]"
-          to="/ui-elements"
+          :class="[$route.name === 'Convocatorias' ? activeClass : inactiveClass]"
+          to="/convocatorias"
         >
           <svg
             class="w-5 h-5"
@@ -105,13 +105,42 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">UI Elements</span>
+          <span class="mx-4">Convocatorias</span>
         </router-link>
 
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Tables' ? activeClass : inactiveClass]"
-          to="/tables"
+          :class="[$route.name === 'Propuestas' ? activeClass : inactiveClass]"
+          to="/propuestas"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z" stroke-width="0" fill="currentColor" /><path d="M19 7h-4l-.001 -4.001z" stroke-width="0" fill="currentColor" /></svg>
+          <!-- <svg
+            class="w-5 h-5"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 3C6.44772 3 6 3.44772 6 4C6 4.55228 6.44772 5 7 5H13C13.5523 5 14 4.55228 14 4C14 3.44772 13.5523 3 13 3H7Z"
+              fill="currentColor"
+            />
+            <path
+              d="M4 7C4 6.44772 4.44772 6 5 6H15C15.5523 6 16 6.44772 16 7C16 7.55228 15.5523 8 15 8H5C4.44772 8 4 7.55228 4 7Z"
+              fill="currentColor"
+            />
+            <path
+              d="M2 11C2 9.89543 2.89543 9 4 9H16C17.1046 9 18 9.89543 18 11V15C18 16.1046 17.1046 17 16 17H4C2.89543 17 2 16.1046 2 15V11Z"
+              fill="currentColor"
+            />
+          </svg> -->
+
+          <span class="mx-4">Propuestas</span>
+        </router-link>
+
+        <router-link
+          class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
+          :class="[$route.name === 'Proyectos' ? activeClass : inactiveClass]"
+          to="/proyectos"
         >
           <svg
             class="w-5 h-5"
@@ -133,7 +162,7 @@ const inactiveClass = ref(
             />
           </svg>
 
-          <span class="mx-4">Tables</span>
+          <span class="mx-4">Proyectos</span>
         </router-link>
 
         <router-link
@@ -141,7 +170,8 @@ const inactiveClass = ref(
           :class="[$route.name === 'Forms' ? activeClass : inactiveClass]"
           to="/forms"
         >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+          <!-- <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path
               d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
             />
@@ -150,12 +180,12 @@ const inactiveClass = ref(
               d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
               clip-rule="evenodd"
             />
-          </svg>
+          </svg> -->
 
-          <span class="mx-4">Forms</span>
+          <span class="mx-4">Usuarios</span>
         </router-link>
 
-        <router-link
+        <!-- <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Cards' ? activeClass : inactiveClass]"
           to="/cards"
@@ -194,7 +224,7 @@ const inactiveClass = ref(
           </svg>
 
           <span class="mx-4">Blank</span>
-        </router-link>
+        </router-link> -->
       </nav>
     </div>
   </div>
