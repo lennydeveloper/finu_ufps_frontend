@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 export default {
   props: ['nombre', 'descripcion', 'fechaInicio', 'fechaLimite', 'rangoEval', 'fechaPublicacion', 'rutaArchivo', 'idConvocatoria'],
   setup(props) {
+    const user = this.$store.state.user
     const router = useRouter()
     function verPropuestas() {
       router.push({
@@ -21,7 +22,7 @@ export default {
         },
       })
     }
-    return { postularConvocatoria, verPropuestas }
+    return { postularConvocatoria, verPropuestas, user }
   },
 }
 </script>
@@ -43,6 +44,7 @@ export default {
 
           <div class="flex items-center mt-2 ml-8">
             <ul class="list-disc">
+              {{ user }}
               <li><b>Fecha de Inicio:</b> {{ fechaInicio }}</li>
               <li><b>Fecha limite de postulación de la propuesta:</b> {{ fechaLimite }}</li>
               <li><b>Periodo de evaluación de las propuestas:</b> {{ rangoEval }}</li>

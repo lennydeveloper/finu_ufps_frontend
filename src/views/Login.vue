@@ -20,6 +20,9 @@ export default {
       axios.post('http://localhost:8000/login', formData, { headers })
         .then((result) => {
           this.$store.commit('guardarUsuario', result.data)
+          this.$router.push({
+            path: '/dashboard',
+          })
         })
     },
   },
