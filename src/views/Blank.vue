@@ -40,7 +40,7 @@ export default {
     }
   },
   beforeCreate() {
-    axios.get('http://localhost:8000/dashboard/totales')
+    axios.get('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/dashboard/totales')
       .then((result) => {
         const data = result.data
         this.totalConvocatorias = data.convocatorias

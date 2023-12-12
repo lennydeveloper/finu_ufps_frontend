@@ -17,7 +17,7 @@ export default {
       const headers = {
         'Content-Type': 'application/json',
       }
-      axios.post('http://localhost:8000/login', formData, { headers })
+      axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/login', formData, { headers })
         .then((result) => {
           this.$store.commit('guardarUsuario', result.data)
           this.$router.push({

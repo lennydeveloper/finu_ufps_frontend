@@ -67,7 +67,7 @@ function register() {
   formData.append('tipo_convocatoria', data.tipo_convocatoria)
   formData.append('file', selectedFile.value ?? '')
 
-  axios.post('http://localhost:8000/registro/convocatoria', formData, { headers })
+  axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/registro/convocatoria', formData, { headers })
     .then((result) => {
       if (result.status === 201) {
         alert('La convocatoria ha sido creada exitosamente.')

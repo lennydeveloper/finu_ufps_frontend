@@ -22,7 +22,7 @@ export default {
   beforeMount() {
     this.lbl_rol = this.$route.query.rol === 2 ? 'Docente' : 'Estudiante'
     // get programas
-    axios.get('http://localhost:8000/programas')
+    axios.get('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/programas')
       .then((result) => {
         this.listado_programas = result.data
       })
@@ -55,7 +55,7 @@ export default {
       formData.append('codigo', this.usuario.codigo)
       formData.append('programa', this.usuario.programa)
 
-      axios.post('http://localhost:8000/registro/usuario', formData, { headers })
+      axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/registro/usuario', formData, { headers })
         .then((result) => {
           if (result.status === 201) {
             alert('El usuario ha sido creado exitosamente.')

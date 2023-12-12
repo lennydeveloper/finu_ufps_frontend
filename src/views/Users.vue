@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     getUsuarios() {
-      const url = 'http://localhost:8000/usuarios'
+      const url = 'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/usuarios'
       axios.get(url)
         .then((result) => {
           this.usuarios = result.data

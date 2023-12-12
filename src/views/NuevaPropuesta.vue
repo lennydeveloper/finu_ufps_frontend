@@ -7,9 +7,9 @@ export default {
   data() {
     return {
       endpoints: [
-        'http://localhost:8000/grupos-inv',
-        'http://localhost:8000/facultades',
-        'http://localhost:8000/programas',
+        'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/grupos-inv',
+        'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/facultades',
+        'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/programas',
       ],
       documento: null,
       propuesta: {
@@ -53,7 +53,7 @@ export default {
       formData.append('convocatoria_id', this.propuesta.convocatoria_id)
       formData.append('file', this.documento)
 
-      axios.post('http://localhost:8000/registro/propuesta', formData, { headers })
+      axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/registro/propuesta', formData, { headers })
         .then((result) => {
           if (result.status === 201) {
             alert('La propuesta ha sido creada exitosamente.')

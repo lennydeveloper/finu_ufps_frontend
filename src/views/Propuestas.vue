@@ -20,8 +20,8 @@ export default {
       console.log(this.convocatoria_id)
       // TODO => agarrar el id de usuario a partir del login
       const url = this.convocatoria_id === null
-        ? `http://localhost:8000/propuestas?usuario_id=${11}`
-        : `http://localhost:8000/propuestas?convocatoria_id=${this.convocatoria_id}`
+        ? `https://finu-rest-api-dev-aptf.4.us-1.fl0.io/propuestas?usuario_id=${11}`
+        : `https://finu-rest-api-dev-aptf.4.us-1.fl0.io/propuestas?convocatoria_id=${this.convocatoria_id}`
 
       axios.get(url)
         .then((result) => {
@@ -199,7 +199,7 @@ const {
                   <td
                     class="px-6 py-4 text-sm font-medium leading-5 text-left border-b border-gray-200 whitespace-nowrap"
                   >
-                    <a :href="`http://localhost:8000/download?url=${item.url_archivo}`" class="text-indigo-600 hover:text-indigo-900">
+                    <a :href="`https://finu-rest-api-dev-aptf.4.us-1.fl0.io/download?url=${item.url_archivo}`" class="text-indigo-600 hover:text-indigo-900">
                       <span class="ml-1 p-0">Descargar</span>
                     </a>
                   </td>

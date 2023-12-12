@@ -12,7 +12,7 @@ export default {
     }
   },
   beforeCreate() {
-    axios.get('http://localhost:8000/convocatorias')
+    axios.get('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/convocatorias')
       .then((result) => {
         this.convocatorias = result.data
       })

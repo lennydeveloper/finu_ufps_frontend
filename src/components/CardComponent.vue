@@ -53,7 +53,7 @@ export default {
           </div>
 
           <p class="text-base text-gray-700 mt-2">
-            Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a :href="`http://localhost:8000/download?url=${rutaArchivo}`" class="text-indigo-600 hover:text-indigo-900">Descargar Documentos</a>
+            Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a :href="`https://finu-rest-api-dev-aptf.4.us-1.fl0.io/download?url=${rutaArchivo}`" class="text-indigo-600 hover:text-indigo-900">Descargar Documentos</a>
           </p>
 
           <div class="flex justify-center mt-4">
