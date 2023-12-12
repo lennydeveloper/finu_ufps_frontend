@@ -29,7 +29,7 @@ const open = ref(false)
       <div
         class="z-50 w-11/12 mx-auto overflow-y-auto bg-white rounded shadow-lg modal-container md:max-w-md"
       >
-        <div
+        <!-- <div
           class="absolute top-0 right-0 z-50 flex flex-col items-center mt-4 mr-4 text-sm text-white cursor-pointer modal-close"
         >
           <svg
@@ -44,7 +44,7 @@ const open = ref(false)
             />
           </svg>
           <span class="text-sm">(Esc)</span>
-        </div>
+        </div> -->
 
         <!-- Add margin if you want to see some of the overlay behind the modal -->
         <div class="px-6 py-4 text-left modal-content">
@@ -77,13 +77,13 @@ const open = ref(false)
               class="p-3 px-6 py-3 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400 focus:outline-none"
               @click="open = false"
             >
-              Close
+              Cerrar
             </button>
             <button
               class="px-6 py-3 font-medium tracking-wide text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none"
               @click="open = false"
             >
-              Action
+              Aceptar
             </button>
           </div>
         </div>

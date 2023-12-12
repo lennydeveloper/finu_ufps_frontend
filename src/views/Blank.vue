@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <!-- <template>
   <h3 class="text-gray-700 text-3xl font-medium">
     Blank Page
@@ -5,18 +6,22 @@
 </template> -->
 
 <script>
+import axios from 'axios'
 import { Pie } from 'vue-chartjs'
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Tooltip } from 'chart.js'
 
-// import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
-
-ChartJS.register(ArcElement, Tooltip, Legend)
-// ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
   components: { Pie },
   data() {
     return {
+      totalConvocatorias: 0,
+      totalProyectos: 0,
+      totalPresupuesto: 0,
+      totalDocentes: 0,
+      totalEstudiantes: 0,
+      totalGruposInv: 0,
       chartData: {
       //   labels: [ 'January', 'February', 'March' ],
       //   datasets: [ { data: [40, 20, 12] } ]
@@ -33,6 +38,18 @@ export default {
         maintainAspectRatio: false,
       },
     }
+  },
+  beforeCreate() {
+    axios.get('http://localhost:8000/dashboard/totales')
+      .then((result) => {
+        const data = result.data
+        this.totalConvocatorias = data.convocatorias
+        this.totalProyectos = data.proyectos
+        this.totalPresupuesto = data.presupuesto
+        this.totalDocentes = data.docentes
+        this.totalEstudiantes = data.estudiantes
+        this.totalGruposInv = data.grupos
+      })
   },
 }
 </script>
@@ -80,7 +97,7 @@ export default {
 
           <div class="mx-5">
             <h4 class="text-2xl font-semibold text-gray-700">
-              8,282
+              {{ totalConvocatorias }}
             </h4>
             <div class="text-gray-500">
               Convocatorias realizadas por el FINU
@@ -150,7 +167,7 @@ export default {
 
           <div class="mx-5">
             <h4 class="text-2xl font-semibold text-gray-700">
-              200,521
+              {{ totalProyectos }}
             </h4>
             <div class="text-gray-500">
               Proyectos registrados en la plataforma
@@ -219,8 +236,8 @@ export default {
             </div> -->
 
           <div class="mx-5">
-            <h4 class="text-2xl font-semibold text-gray-700">
-              $123.456.789
+            <h4 class="text-2xl tracking-tight font-semibold text-gray-700">
+              COP {{ totalPresupuesto }}
             </h4>
             <div class="text-gray-500">
               Presupuesto total de inversión FINU
@@ -271,7 +288,7 @@ export default {
 
           <div class="mx-5">
             <h4 class="text-2xl font-semibold text-gray-700">
-              1.234
+              {{ totalDocentes }}
             </h4>
             <div class="text-gray-500">
               Docentes registrados en la plataforma
@@ -341,7 +358,7 @@ export default {
 
           <div class="mx-5">
             <h4 class="text-2xl font-semibold text-gray-700">
-              5.678
+              {{ totalEstudiantes }}
             </h4>
             <div class="text-gray-500">
               Estudiantes registrados en la plataforma
@@ -411,7 +428,7 @@ export default {
 
           <div class="mx-5">
             <h4 class="text-2xl font-semibold text-gray-700">
-              123.456
+              {{ totalGruposInv }}
             </h4>
             <div class="text-gray-500">
               Grupos de investigación registrados

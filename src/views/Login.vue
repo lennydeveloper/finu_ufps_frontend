@@ -1,13 +1,28 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+<!-- eslint-disable no-console -->
+<script>
+import axios from 'axios'
 
-const router = useRouter()
-const email = ref('example@ufps.edu.co')
-const password = ref('@#!@#asdf1231!_!@#')
-
-function login() {
-  router.push('/dashboard')
+export default {
+  data() {
+    return {
+      email: 'example@ufps.edu.co',
+      password: 'bacon',
+    }
+  },
+  methods: {
+    login() {
+      const formData = new FormData()
+      formData.append('email', this.email)
+      formData.append('clave', this.password)
+      const headers = {
+        'Content-Type': 'application/json',
+      }
+      axios.post('http://localhost:8000/login', formData, { headers })
+        .then((result) => {
+          this.$store.commit('guardarUsuario', result.data)
+        })
+    },
+  },
 }
 </script>
 
@@ -61,15 +76,15 @@ function login() {
             <a
               class="block text-sm fontme hover:underline font-semibold"
               style="color: #DD4B39;"
-              href="#"
-            >¿Olvidaste tu contraseña?</a>
+              href="/registro-usuario?rol=3"
+            >Registro estudiante</a>
           </div>
 
           <div>
             <a
               class="block text-sm fontme hover:underline font-semibold"
               style="color: #DD4B39;"
-              href="#"
+              href="/registro-usuario?rol=2"
             >Registro docente</a>
           </div>
         </div>

@@ -167,8 +167,8 @@ const inactiveClass = ref(
 
         <router-link
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
-          :class="[$route.name === 'Forms' ? activeClass : inactiveClass]"
-          to="/forms"
+          :class="[$route.name === 'Users' ? activeClass : inactiveClass]"
+          to="/usuarios"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
           <!-- <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
