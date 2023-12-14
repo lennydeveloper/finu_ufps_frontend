@@ -53,6 +53,7 @@ const routes: RouteRecordRaw[] = [
     path: '/modal',
     name: 'Modal',
     component: Modal,
+    meta: { layout: 'empty' },
   },
   {
     path: '/blank',

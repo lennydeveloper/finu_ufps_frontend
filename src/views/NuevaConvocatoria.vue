@@ -67,7 +67,7 @@ function register() {
   formData.append('tipo_convocatoria', data.tipo_convocatoria)
   formData.append('file', selectedFile.value ?? '')
 
-  axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/registro/convocatoria', formData, { headers })
+  axios.post('http://localhost:8000/registro/convocatoria', formData, { headers })
     .then((result) => {
       if (result.status === 201) {
         alert('La convocatoria ha sido creada exitosamente.')
@@ -215,7 +215,7 @@ function register() {
 
               <div>
                 <label class="text-gray-700" for="username">Tipo de convocatoria</label>
-                <select id="countries" v-model="convocatoria.tipo_convocatoria" required class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-finu-red focus:ring focus:ring-opacity-40 focus:ring-finu-red">
+                <select v-model="convocatoria.tipo_convocatoria" required class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-finu-red focus:ring focus:ring-opacity-40 focus:ring-finu-red">
                   <option value="semillero" selected>
                     Semillero (estudiantes)
                   </option>

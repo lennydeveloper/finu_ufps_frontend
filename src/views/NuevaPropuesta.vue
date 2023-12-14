@@ -6,20 +6,15 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      endpoints: [
-        'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/grupos-inv',
-        'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/facultades',
-        'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/programas',
-      ],
+      usuario: null,
       documento: null,
+      convocatoria_id: null,
       propuesta: {
         nombre: '',
         descripcion: '',
-        usuario_id: 10,
         grupo_inv: null,
         facultad: null,
         programa: null,
-        convocatoria_id: null,
       },
       listado_grupos_inv: [],
       listado_facultades: [],
@@ -27,14 +22,38 @@ export default {
     }
   },
   beforeMount() {
-    this.propuesta.convocatoria_id = this.$route.query.id
-    Promise.all(this.endpoints.map(url => axios.get(url))).then(([{ data: grupos }, { data: facs }, { data: programas }]) => {
-      this.listado_grupos_inv = grupos
-      this.listado_facultades = facs
-      this.listado_programas = programas
-    })
+    this.convocatoria_id = this.$route.query.id
+    this.usuario = JSON.parse(localStorage.getItem('user'))
+    axios.get('http://localhost:8000/info-propuesta')
+      .then((result) => {
+        const data = result.data
+        this.listado_facultades = data.facultades
+        this.listado_grupos_inv = data.grupos_inv
+        this.listado_programas = data.programas
+      })
+    // Promise.all(this.endpoints.map(url => axios.get(url))).then(([{ data: grupos }, { data: facs }, { data: programas }]) => {
+    //   this.listado_grupos_inv = grupos
+    //   this.listado_facultades = facs
+    //   this.listado_programas = programas
+    // })
   },
   methods: {
+    limpiarFormulario() {
+      this.propuesta = {
+        nombre: '',
+        descripcion: '',
+        grupo_inv: null,
+        facultad: null,
+        programa: null,
+      }
+      this.documento = null
+    },
+    cancelarRegistro() {
+      this.limpiarFormulario()
+      this.$router.push({
+        path: '/convocatorias',
+      })
+    },
     handleFileUpload(event) {
       this.documento = event.target.files[0]
     },
@@ -46,31 +65,22 @@ export default {
 
       formData.append('titulo', this.propuesta.nombre)
       formData.append('descripcion', this.propuesta.descripcion)
-      formData.append('usuario_id', this.propuesta.usuario_id)
+      formData.append('usuario_id', this.usuario.id)
       formData.append('grupo_inv', this.propuesta.grupo_inv)
       formData.append('facultad', this.propuesta.facultad)
       formData.append('programa', this.propuesta.programa)
-      formData.append('convocatoria_id', this.propuesta.convocatoria_id)
+      formData.append('convocatoria_id', this.convocatoria_id)
       formData.append('file', this.documento)
 
-      axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/registro/propuesta', formData, { headers })
+      axios.post('http://localhost:8000/registro/propuesta', formData, { headers })
         .then((result) => {
           if (result.status === 201) {
             alert('La propuesta ha sido creada exitosamente.')
-            this.propuesta = {
-              nombre: '',
-              descripcion: '',
-              usuario_id: 10,
-              grupo_inv: null,
-              facultad: null,
-              programa: null,
-            }
-            this.documento = null
-            this.$router.go(0)
+            this.limpiarFormulario()
           }
         })
         .catch((err) => {
-          alert(err.response.data)
+          alert(err.response.data.detail)
         })
     },
   },
@@ -86,14 +96,7 @@ export default {
           to="/dashboard"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home mr-2" width="22" height="22" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-          <!-- <span class="mx-2">Home</span> -->
         </router-link>
-        <!-- <div class="flex items-center hover:text-finu-red">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-      <p class="ml-1">
-        Home
-      </p>
-    </div> -->
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="14" height="14" viewBox="0 0 20 18" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg>
         </div>
@@ -101,7 +104,7 @@ export default {
           class="mt-1 flex items-center duration-200 hover:text-finu-red"
           to="/convocatorias"
         >
-          <span class="mx-2">Propuesta</span>
+          <span class="mx-2">Convocatorias</span>
         </router-link>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="14" height="14" viewBox="0 0 20 18" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg>
@@ -187,7 +190,8 @@ export default {
                 Crear
               </button>
               <button
-                class="w-28 px-4 py-2 ml-3 text-white rounded-md focus:outline-none focus:bg-gray-700" style="background-color: #DD9239;"
+                class="w-28 px-4 py-2 ml-3 text-white rounded-md focus:outline-none focus:bg-gray-700"
+                style="background-color: #DD9239;" @click="cancelarRegistro"
               >
                 Cancelar
               </button>

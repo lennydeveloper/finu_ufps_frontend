@@ -1,3 +1,4 @@
+<!-- eslint-disable no-alert -->
 <!-- eslint-disable no-console -->
 <script>
 import axios from 'axios'
@@ -5,7 +6,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      email: 'example@ufps.edu.co',
+      email: 'email@example.com',
       password: 'bacon',
     }
   },
@@ -17,12 +18,15 @@ export default {
       const headers = {
         'Content-Type': 'application/json',
       }
-      axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/login', formData, { headers })
+      axios.post('http://localhost:8000/login', formData, { headers })
         .then((result) => {
-          this.$store.commit('guardarUsuario', result.data)
+          localStorage.setItem('user', JSON.stringify(result.data))
           this.$router.push({
             path: '/dashboard',
           })
+        })
+        .catch((err) => {
+          alert(err.response.data)
         })
     },
   },

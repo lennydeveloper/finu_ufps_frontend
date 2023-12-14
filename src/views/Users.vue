@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     getUsuarios() {
-      const url = 'https://finu-rest-api-dev-aptf.4.us-1.fl0.io/usuarios'
+      const url = 'http://localhost:8000/usuarios'
       axios.get(url)
         .then((result) => {
           this.usuarios = result.data
@@ -92,43 +92,15 @@ export default {
               </thead>
 
               <tbody class="bg-white">
-                <tr v-for="(u, index) in usuarios" :key="index">
-                  <!-- <td
-                    class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
-                  >
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 w-10 h-10">
-                        <img
-                          class="w-10 h-10 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt="profile pic"
-                        >
-                      </div>
-
-                      <div class="ml-4">
-                        <div
-                          class="text-sm font-medium leading-5 text-gray-900"
-                        >
-                          {{ u.name }}
-                        </div>
-                        <div class="text-sm leading-5 text-gray-500">
-                          {{ u.email }}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-
+                <tr v-if="usuarios.length === 0">
                   <td
-                    class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
+                    colspan="100%"
+                    class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap text-center"
                   >
-                    <div class="text-sm leading-5 text-gray-900">
-                      {{ u.title }}
-                    </div>
-                    <div class="text-sm leading-5 text-gray-500">
-                      {{ u.title2 }}
-                    </div>
-                  </td> -->
-
+                    No se encuentra información registrada en el sistema.
+                  </td>
+                </tr>
+                <tr v-for="(u, index) in usuarios" :key="index">
                   <td
                     class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                   >

@@ -2,9 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    user: {
-      hola: 'mundo',
-    },
+    user: {},
   },
   mutations: {
     guardarUsuario(state, user) {

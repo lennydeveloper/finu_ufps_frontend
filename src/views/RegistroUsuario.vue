@@ -20,9 +20,9 @@ export default {
     }
   },
   beforeMount() {
-    this.lbl_rol = this.$route.query.rol === 2 ? 'Docente' : 'Estudiante'
+    this.lbl_rol = this.$route.query.rol === '2' ? 'Docente' : 'Estudiante'
     // get programas
-    axios.get('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/programas')
+    axios.get('http://localhost:8000/programas')
       .then((result) => {
         this.listado_programas = result.data
       })
@@ -38,6 +38,9 @@ export default {
         codigo: '',
         programa: null,
       }
+    },
+    cancelar() {
+      this.limpiarFormulario()
       this.$router.push('/')
     },
     register() {
@@ -55,7 +58,7 @@ export default {
       formData.append('codigo', this.usuario.codigo)
       formData.append('programa', this.usuario.programa)
 
-      axios.post('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/registro/usuario', formData, { headers })
+      axios.post('http://localhost:8000/registro/usuario', formData, { headers })
         .then((result) => {
           if (result.status === 201) {
             alert('El usuario ha sido creado exitosamente.')
@@ -156,7 +159,7 @@ export default {
                   v-model="lbl_rol"
                   readonly
                   required
-                  class="w-full mt-2 border-gray-200 rounded-md focus:border-finu-red focus:ring focus:ring-opacity-40 focus:ring-finu-red"
+                  class="w-full mt-2 border-gray-200 rounded-md focus:outline-none focus:ring-transparent focus:border"
                   type="text"
                 >
               </div>
@@ -171,7 +174,7 @@ export default {
               </button>
               <button
                 class="w-28 px-4 py-2 ml-3 text-white rounded-md focus:outline-none focus:bg-gray-700"
-                style="background-color: #DD9239;" @click="limpiarFormulario"
+                style="background-color: #DD9239;" @click="cancelar"
               >
                 Cancelar
               </button>

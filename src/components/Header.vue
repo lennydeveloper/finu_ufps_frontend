@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import { useSidebar } from '../composables/useSidebar'
 
 const dropdownOpen = ref(false)
 const { isOpen } = useSidebar()
+const router = useRouter()
+const store = useStore()
+
+function cerrarSesion() {
+  localStorage.setItem('user', {})
+  router.push({
+    path: '/',
+  })
+}
 </script>
 
 <template>
@@ -109,12 +120,13 @@ const { isOpen } = useSidebar()
               href="#"
               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
             >Products</a>
-            <router-link
-              to="/"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
+            <button
+              href="#"
+              class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white focus:outline-none border-none"
+              @click="cerrarSesion"
             >
               Log out
-            </router-link>
+            </button>
           </div>
         </transition>
       </div>

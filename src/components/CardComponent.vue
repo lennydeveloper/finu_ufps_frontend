@@ -1,10 +1,10 @@
+<!-- eslint-disable no-console -->
 <script>
 import { useRouter } from 'vue-router'
 
 export default {
   props: ['nombre', 'descripcion', 'fechaInicio', 'fechaLimite', 'rangoEval', 'fechaPublicacion', 'rutaArchivo', 'idConvocatoria'],
   setup(props) {
-    const user = this.$store.state.user
     const router = useRouter()
     function verPropuestas() {
       router.push({
@@ -22,8 +22,17 @@ export default {
         },
       })
     }
-    return { postularConvocatoria, verPropuestas, user }
+    return { postularConvocatoria, verPropuestas }
   },
+  data() {
+    return {
+      user: null,
+    }
+  },
+  beforeMount() {
+    this.user = JSON.parse(localStorage.getItem('user'))
+  },
+  methods: {},
 }
 </script>
 
@@ -44,7 +53,6 @@ export default {
 
           <div class="flex items-center mt-2 ml-8">
             <ul class="list-disc">
-              {{ user }}
               <li><b>Fecha de Inicio:</b> {{ fechaInicio }}</li>
               <li><b>Fecha limite de postulación de la propuesta:</b> {{ fechaLimite }}</li>
               <li><b>Periodo de evaluación de las propuestas:</b> {{ rangoEval }}</li>
@@ -53,14 +61,14 @@ export default {
           </div>
 
           <p class="text-base text-gray-700 mt-2">
-            Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a :href="`https://finu-rest-api-dev-aptf.4.us-1.fl0.io/download?url=${rutaArchivo}`" class="text-indigo-600 hover:text-indigo-900">Descargar Documentos</a>
+            Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a :href="`http://localhost:8000/download?url=${rutaArchivo}`" class="text-indigo-600 hover:text-indigo-900">Descargar Documentos</a>
           </p>
 
           <div class="flex justify-center mt-4">
-            <button v-if="true" class="mr-2 text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="postularConvocatoria()">
+            <button v-if="user.rol.id !== 1" class="mr-2 text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="postularConvocatoria()">
               Postularse
             </button>
-            <button class="text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="verPropuestas()">
+            <button v-if="user.rol.id === 1" class="text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="verPropuestas()">
               Ver Propuestas
             </button>
           </div>

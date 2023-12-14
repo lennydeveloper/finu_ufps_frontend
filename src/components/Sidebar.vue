@@ -1,5 +1,7 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
+import { useStore } from 'vuex'
 import { useSidebar } from '../composables/useSidebar'
 
 const { isOpen } = useSidebar()
@@ -7,8 +9,13 @@ const activeClass = ref(
   'bg-gray-600 border-gray-600 bg-opacity-25 text-gray-800',
 )
 const inactiveClass = ref(
-  'border-white text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-800 hover:border-white    ',
+  'border-white text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-800 hover:border-white',
 )
+
+const store = useStore()
+let user = null
+
+onBeforeMount(() => user = JSON.parse(localStorage.getItem('user')))
 </script>
 
 <template>
@@ -53,6 +60,7 @@ const inactiveClass = ref(
 
       <nav class="mt-10">
         <router-link
+          v-show="user.rol.id === 1"
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Dashboard' ? activeClass : inactiveClass]"
           to="/dashboard"
@@ -166,6 +174,7 @@ const inactiveClass = ref(
         </router-link>
 
         <router-link
+          v-show="user.rol.id === 1"
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Users' ? activeClass : inactiveClass]"
           to="/usuarios"

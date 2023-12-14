@@ -8,11 +8,13 @@ export default {
   components: { CardComponent },
   data() {
     return {
+      user: null,
       convocatorias: [],
     }
   },
-  beforeCreate() {
-    axios.get('https://finu-rest-api-dev-aptf.4.us-1.fl0.io/convocatorias')
+  beforeMount() {
+    this.user = JSON.parse(localStorage.getItem('user'))
+    axios.get('http://localhost:8000/convocatorias')
       .then((result) => {
         this.convocatorias = result.data
       })
@@ -45,7 +47,7 @@ export default {
         </div>
       </div>
       <div>
-        <button class="flex items-center justify-center text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="redirectNuevaConvocatoria">
+        <button v-show="user.rol.id === 1" class="flex items-center justify-center text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="redirectNuevaConvocatoria">
           <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 icon icon-tabler icon-tabler-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
           <span class="ml-0 p-0">Crear</span>
         </button>
@@ -58,6 +60,7 @@ export default {
     <div class="mt-8">
       <CardComponent
         v-for="(item, index) in convocatorias"
+        v-show="user.rol.id === 1 || (item.tipo_convocatoria === 'grupo' && user.rol.id === 2) || item.tipo_convocatoria === 'semillero'"
         :key="index"
         :nombre="item.titulo_convocatoria"
         :descripcion="item.descripcion_convocatoria"
