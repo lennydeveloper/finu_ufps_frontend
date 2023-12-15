@@ -21,6 +21,11 @@ export default {
       filtro_busqueda: '',
       idx_aprobacion_externa: null,
       estado_evaluador_externo: null,
+      registro_evaluadores: {
+        puntaje: 0,
+        estado: null,
+        documento: null,
+      },
     }
   },
   beforeMount() {
@@ -47,6 +52,7 @@ export default {
         .then((result) => {
           this.estados_propuesta = result.data
           this.estado_evaluador_externo = this.estados_propuesta.filter(e => e.nombre.toLowerCase() === 'aprobado')[0].id
+          this.registro_evaluadores.estado = this.estado_evaluador_externo
         })
     },
     aprobarPropuesta(propuesta) {
@@ -122,9 +128,35 @@ export default {
         })
     },
     handleFileUpload(event) {
-      selectedFile.value = event.target.files[0]
-      // eslint-disable-next-line no-console
-      console.log(selectedFile.value)
+      this.registro_evaluadores.documento = event.target.files[0]
+    },
+    cargarPuntajeExterno() {
+      const formData = new FormData()
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+      }
+      formData.append('estado_id', this.registro_evaluadores.estado)
+      formData.append('propuesta_id', this.selected_propuesta.id)
+      formData.append('puntaje', this.registro_evaluadores.puntaje)
+      formData.append('file', this.registro_evaluadores.documento)
+      this.cancelarExterno()
+      axios.post('http://localhost:8000/update/calificacion-propuesta', formData, { headers })
+        .then((result) => {
+          alert(result.data)
+          this.$router.go(0)
+        })
+        .catch((err) => {
+          alert(err.response.data)
+          this.router.go(0)
+        })
+    },
+    cancelarExterno() {
+      this.registro_evaluadores = {
+        puntaje: 0,
+        estado: null,
+        documento: null,
+      }
+      this.open = false
     },
   },
 }
@@ -158,10 +190,8 @@ export default {
       </div>
     </div>
 
-    {{ idx_aprobacion_externa }}
-
     <div class="flex justify-end">
-      <input v-model="filtro_busqueda" type="text" placeholder="Filtro de busqueda ...">
+      <input v-model="filtro_busqueda" type="text" placeholder="Filtro de busqueda ..." class="rounded-md">
       <button type="button" class="ml-2 px-4 py-2 bg-finu-red text-white rounded-md" @click="filtrarPropuestas">
         Filtrar
       </button>
@@ -238,6 +268,7 @@ export default {
             <div>
               <label class="text-gray-700">Puntaje</label>
               <input
+                v-model="registro_evaluadores.puntaje"
                 class="w-full mt-2 border-gray-200 rounded-md focus:border-finu-red focus:ring focus:ring-opacity-40 focus:ring-finu-red"
                 rows="1"
               >
@@ -245,7 +276,7 @@ export default {
 
             <div class="mt-4">
               <label class="text-gray-700">Estado</label>
-              <select v-model="estado_evaluador_externo" required class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-finu-red focus:ring focus:ring-opacity-40 focus:ring-finu-red">
+              <select v-model="registro_evaluadores.estado" required class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-finu-red focus:ring focus:ring-opacity-40 focus:ring-finu-red">
                 <option v-for="(item, index) in estados_propuesta" v-show="item.id === 5 || item.id === 6" :key="index" :value="item.id">
                   {{ item.nombre }}
                 </option>
@@ -253,7 +284,7 @@ export default {
             </div>
 
             <div class="mt-4">
-              <label class="text-gray-700" for="emailAddress">Documento</label>
+              <label class="text-gray-700">Documento</label>
               <input
                 required
                 class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none"
@@ -300,11 +331,13 @@ export default {
             <button
               type="button"
               class="w-28 px-4 py-2 text-white rounded-md bg-finu-red focus:outline-none focus:bg-gray-700"
+              @click="cargarPuntajeExterno"
             >
-              Aceptar
+              Enviar
             </button>
             <button
               class="p-3 px-6 py-3 ml-2 text-finu-red bg-transparent rounded-lg focus:outline-none"
+              @click="cancelarExterno"
             >
               Cancelar
             </button>
@@ -448,7 +481,7 @@ export default {
                   <td
                     class="px-6 py-4 text-sm font-medium leading-5 text-left border-b border-gray-200 whitespace-nowrap"
                   >
-                    <a :href="`http://localhost:8000/download?url=${item.url_archivo}`" class="text-indigo-600 hover:text-indigo-900">
+                    <a :href="`http://localhost:8000/download?url=${item.url_archivo_propuesta}`" class="text-indigo-600 hover:text-indigo-900">
                       <span class="ml-1 p-0">Descargar</span>
                     </a>
                   </td>
