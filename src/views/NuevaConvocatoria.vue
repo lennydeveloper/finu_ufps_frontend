@@ -217,10 +217,10 @@ function register() {
                 <label class="text-gray-700" for="username">Tipo de convocatoria</label>
                 <select v-model="convocatoria.tipo_convocatoria" required class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-finu-red focus:ring focus:ring-opacity-40 focus:ring-finu-red">
                   <option value="semillero" selected>
-                    Semillero (estudiantes)
+                    Semillero (docentes y estudiantes)
                   </option>
                   <option value="grupo">
-                    Grupo (estudiantes y docentes)
+                    Grupo (estudiantes)
                   </option>
                 </select>
               </div>
