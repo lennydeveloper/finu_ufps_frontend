@@ -20,9 +20,17 @@ export default {
       }
       axios.post('http://localhost:8000/login', formData, { headers })
         .then((result) => {
-          localStorage.setItem('user', JSON.stringify(result.data))
+          const data = result.data
+          let url = ''
+          localStorage.setItem('user', JSON.stringify(data))
+          if (data.rol.id === 1)
+            url = '/dashboard'
+
+          else
+            url = '/convocatorias'
+
           this.$router.push({
-            path: '/dashboard',
+            path: url,
           })
         })
         .catch((err) => {
