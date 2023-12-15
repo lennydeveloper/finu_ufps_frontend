@@ -16,6 +16,8 @@ export default {
   data() {
     return {
       usuarios: [],
+      usuarios_filtrados: [],
+      filtro_busqueda: '',
     }
   },
   beforeMount() {
@@ -27,7 +29,17 @@ export default {
       axios.get(url)
         .then((result) => {
           this.usuarios = result.data
+          this.usuarios_filtrados = result.data
         })
+    },
+    filtrarUsuarios() {
+      this.usuarios_filtrados = this.usuarios.filter((item) => {
+        return `${item.nombres} ${item.apellidos}`.toLowerCase().includes(this.filtro_busqueda.toLowerCase())
+                || item.telefono.includes(this.filtro_busqueda)
+                || item.email.toLowerCase().includes(this.filtro_busqueda.toLowerCase())
+                || item.rol.nombre.toLowerCase().includes(this.filtro_busqueda.toLowerCase())
+                || item.programa.nombre.toLowerCase().includes(this.filtro_busqueda.toLowerCase())
+      })
     },
   },
 }
@@ -50,6 +62,13 @@ export default {
           Usuarios
         </p>
       </div>
+    </div>
+
+    <div class="flex justify-end">
+      <input v-model="filtro_busqueda" type="text" placeholder="Filtro de busqueda ..." class="rounded-md">
+      <button type="button" class="ml-2 px-4 py-2 bg-finu-red text-white rounded-md" @click="filtrarUsuarios">
+        Filtrar
+      </button>
     </div>
 
     <div class="mt-8">
@@ -86,13 +105,18 @@ export default {
                   <th
                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
                   >
+                    Programa
+                  </th>
+                  <th
+                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
+                  >
                     Rol
                   </th>
                 </tr>
               </thead>
 
               <tbody class="bg-white">
-                <tr v-if="usuarios.length === 0">
+                <tr v-if="usuarios_filtrados.length === 0">
                   <td
                     colspan="100%"
                     class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap text-center"
@@ -100,7 +124,7 @@ export default {
                     No se encuentra información registrada en el sistema.
                   </td>
                 </tr>
-                <tr v-for="(u, index) in usuarios" :key="index">
+                <tr v-for="(u, index) in usuarios_filtrados" :key="index">
                   <td
                     class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                   >
@@ -128,7 +152,13 @@ export default {
                   <td
                     class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                   >
-                    {{ u.rol.nombre.charAt(0).toUpperCase() + u.rol.nombre.slice(1) }}
+                    {{ u.programa.nombre }}
+                  </td>
+
+                  <td
+                    class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap capitalize"
+                  >
+                    {{ u.rol.nombre }}
                   </td>
                 </tr>
               </tbody>
