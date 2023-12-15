@@ -1,21 +1,28 @@
 <!-- eslint-disable no-console -->
-<script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
-import { useStore } from 'vuex'
+<script>
+import { ref } from 'vue'
 import { useSidebar } from '../composables/useSidebar'
 
-const { isOpen } = useSidebar()
-const activeClass = ref(
-  'bg-gray-600 border-gray-600 bg-opacity-25 text-gray-800',
-)
-const inactiveClass = ref(
-  'border-white text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-800 hover:border-white',
-)
-
-const store = useStore()
-let user = null
-
-onBeforeMount(() => user = JSON.parse(localStorage.getItem('user')))
+export default {
+  setup() {
+    const { isOpen } = useSidebar()
+    const activeClass = ref(
+      'bg-gray-600 border-gray-600 bg-opacity-25 text-gray-800',
+    )
+    const inactiveClass = ref(
+      'border-white text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-800 hover:border-white',
+    )
+    return { isOpen, activeClass, inactiveClass }
+  },
+  data() {
+    return {
+      user: {},
+    }
+  },
+  beforeMount() {
+    this.user = this.$store.state.user
+  },
+}
 </script>
 
 <template>
@@ -34,7 +41,8 @@ onBeforeMount(() => user = JSON.parse(localStorage.getItem('user')))
     >
       <div class="flex items-center justify-around mt-8">
         <div class="flex items-center">
-          <svg
+          <img src="https://github.com/lennydeveloper/finu_ufps_frontend/assets/90154644/9ae4bdf4-3512-43b7-b1b3-ad655bfe5a39" alt="logo_ufps">
+          <!-- <svg
             class="w-12 h-12"
             viewBox="0 0 512 512"
             fill="none"
@@ -52,7 +60,7 @@ onBeforeMount(() => user = JSON.parse(localStorage.getItem('user')))
               d="M201.694 387.105C231.686 417.098 280.312 417.098 310.305 387.105C325.301 372.109 332.8 352.456 332.8 332.8C332.8 313.144 325.301 293.491 310.305 278.495C295.309 263.498 288 256 275.2 230.4C256 243.2 243.201 320 243.201 345.6C201.694 345.6 179.2 332.8 179.2 332.8C179.2 352.456 186.698 372.109 201.694 387.105Z"
               fill="white"
             />
-          </svg>
+          </svg> -->
 
           <span class="mx-2 text-2xl font-extrabold text-black">FINU UFPS</span>
         </div>
@@ -60,7 +68,7 @@ onBeforeMount(() => user = JSON.parse(localStorage.getItem('user')))
 
       <nav class="mt-10">
         <router-link
-          v-show="user.rol.id === 1"
+          v-if="user.hasOwnProperty('rol') && user.rol.id == 1"
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Dashboard' ? activeClass : inactiveClass]"
           to="/dashboard"
@@ -174,7 +182,7 @@ onBeforeMount(() => user = JSON.parse(localStorage.getItem('user')))
         </router-link>
 
         <router-link
-          v-show="user.rol.id === 1"
+          v-if="user.hasOwnProperty('rol') && user.rol.id == 1"
           class="flex items-center px-6 py-2 mt-4 duration-200 border-l-4"
           :class="[$route.name === 'Users' ? activeClass : inactiveClass]"
           to="/usuarios"
