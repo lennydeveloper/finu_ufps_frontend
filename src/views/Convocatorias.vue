@@ -62,7 +62,7 @@ export default {
         v-for="(item, index) in convocatorias"
         v-show="user.rol.id === 1 || (item.tipo_convocatoria === 'grupo' && user.rol.id === 2) || item.tipo_convocatoria === 'semillero'"
         :key="index"
-        :nombre="item.titulo_convocatoria"
+        :nombre="item.titulo"
         :descripcion="item.descripcion_convocatoria"
         :fecha-inicio="item.fecha_inicio"
         :fecha-limite="item.fecha_limite"
