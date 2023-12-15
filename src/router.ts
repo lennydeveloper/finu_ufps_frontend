@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -10,7 +11,6 @@ import Modal from './views/Modal.vue'
 import Card from './views/Card.vue'
 import Blank from './views/Blank.vue'
 import Convocatorias from './views/Convocatorias.vue'
-import CardsConvocatoria from './views/CardsConvocatoria.vue'
 import Propuestas from './views/Propuestas.vue'
 import NuevaConvocatoria from './views/NuevaConvocatoria.vue'
 import NuevaPropuesta from './views/NuevaPropuesta.vue'
@@ -96,6 +96,15 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach((to, from) => {
+  if (to.path !== '/' && to.path !== '/registro-usuario') {
+    const localuser = localStorage.getItem('user')
+    if (localuser == null)
+      return '/'
+  }
+  return true
 })
 
 export default router
