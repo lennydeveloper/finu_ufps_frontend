@@ -21,17 +21,18 @@ export default {
       axios.post('http://localhost:8000/login', formData, { headers })
         .then((result) => {
           const data = result.data
-          let url = ''
           localStorage.setItem('user', JSON.stringify(data))
-          if (data.rol.id === 1)
-            url = '/dashboard'
-
-          else
-            url = '/convocatorias'
-
-          this.$router.push({
-            path: url,
-          })
+          this.$store.commit('guardarUsuario', result.data)
+          if (data.rol.id === 1) {
+            this.$router.push({
+              name: 'Dashboard',
+            })
+          }
+          else {
+            this.$router.push({
+              name: 'Convocatorias',
+            })
+          }
         })
         .catch((err) => {
           alert(err.response.data)

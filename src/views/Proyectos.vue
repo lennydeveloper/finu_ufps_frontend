@@ -1,7 +1,6 @@
 <!-- eslint-disable no-console -->
 <script>
 import axios from 'axios'
-import { useTableData } from '../composables/useTableData'
 
 export default {
   data() {
@@ -13,22 +12,21 @@ export default {
       skip: 0,
       limit: 10,
       size: 0,
+      user: null,
     }
   },
   beforeMount() {
-    const { paginatedTableData, wideTableData } = useTableData()
-    this.paginatedTableData = paginatedTableData
-    this.wideTableData = wideTableData
-    axios.get(`http://localhost:8000/proyectos?skip=${this.skip}&limit=${this.limit}`)
-      .then((result) => {
-        this.proyectos = result.data.proyectos
-        this.proyectos_filtrados = result.data.proyectos
-        this.size = result.data.total_proyectos
-      })
+    this.user = JSON.parse(localStorage.getItem('user'))
+    this.obtenerProyectos(this.skip, this.limit, this.user.rol.id, this.user.id)
+    // axios.get(`http://localhost:8000/proyectos?skip=${this.skip}&limit=${this.limit}&rol_id=${this.user.rol.id}`)
+    //   .then((result) => {
+    //     this.proyectos = result.data.proyectos
+    //     this.size = result.data.total_proyectos
+    //   })
   },
   methods: {
-    obtenerProyectos(skip, limit) {
-      axios.get(`http://localhost:8000/proyectos?skip=${skip}&limit=${limit}`)
+    obtenerProyectos(skip, limit, rol_id, usuario_id) {
+      axios.get(`http://localhost:8000/proyectos?skip=${skip}&limit=${limit}&rol_id=${rol_id}&usuario_id=${usuario_id}`)
         .then((result) => {
           this.proyectos = result.data.proyectos
           this.size = result.data.total_proyectos

@@ -36,10 +36,15 @@ export default {
   },
   methods: {
     getPropuestas() {
-      // TODO => agarrar el id de usuario a partir del login
-      const url = this.convocatoria_id === null || this.convocatoria_id === undefined
-        ? `http://localhost:8000/propuestas?usuario_id=${this.user.id}`
-        : `http://localhost:8000/propuestas?convocatoria_id=${this.convocatoria_id}`
+      let url = ''
+      if (this.convocatoria_id === null || this.convocatoria_id === undefined) {
+        this.user.rol.id === 1
+          ? url = `http://localhost:8000/propuestas?rol_id=${this.user.rol.id}`
+          : url = `http://localhost:8000/propuestas?usuario_id=${this.user.id}`
+      }
+      else {
+        url = `http://localhost:8000/propuestas?convocatoria_id=${this.convocatoria_id}`
+      }
 
       axios.get(url)
         .then((result) => {
@@ -158,6 +163,9 @@ export default {
       }
       this.open = false
     },
+    editarPropuesta(id) {
+      alert(`Pendiente por hacer: editar la propuesta No ${id}`)
+    },
   },
 }
 </script>
@@ -246,6 +254,9 @@ export default {
                 </option>
                 <option value="3">
                   En revisión
+                </option>
+                <option value="7">
+                  Cancelado
                 </option>
               </select>
             </div>
@@ -403,6 +414,12 @@ export default {
                   >
                     Acciones
                   </th>
+                  <th
+                    v-show="user.rol.id !== 1"
+                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
+                  >
+                    Acciones
+                  </th>
                 </tr>
               </thead>
 
@@ -494,7 +511,7 @@ export default {
                       >
                         <option
                           v-for="el in estados_propuesta"
-                          v-show="el.id === 4 || el.id === 7"
+                          v-show="el.id === 4"
                           :key="el.id"
                           :value="el.id"
                           :selected="item.estado.id === el.id"
@@ -508,6 +525,19 @@ export default {
                       <a v-show="item.estado.id === 4" class="text-indigo-600 hover:text-indigo-900 hover:cursor-pointer" @click="registrarCalificacion(item)">
                         <span class="ml-1 p-0">Registrar calificacion</span>
                       </a>
+                    </div>
+                  </td>
+                  <td
+                    v-show="user.rol.id !== 1"
+                    class="px-6 py-4 text-sm font-medium leading-5 text-left border-b border-gray-200 whitespace-nowrap"
+                  >
+                    <div v-if="item.usuario.rol.id !== 1">
+                      <button v-if="item.estado.id === 2" class="text-indigo-600 hover:text-indigo-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                      </button>
+                      <button v-if="item.estado.id === 1 || item.estado.id === 2" class="text-indigo-600 hover:text-indigo-900 ml-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil-exclamation" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /><path d="M19 16v3" /><path d="M19 22v.01" /></svg>
+                      </button>
                     </div>
                   </td>
                 </tr>

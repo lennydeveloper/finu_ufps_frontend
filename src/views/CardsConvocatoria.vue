@@ -56,7 +56,7 @@
             </div>
 
             <p class="text-base text-gray-700 mt-2">
-              Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a href="/ruta-del-archivo" class="text-blue-500 hover:underline">Descargar Adjuntos</a>
+              Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a href="/ruta-del-archivo" class="text-blue-500 hover:underline">Descargar Documentos</a>
             </p>
 
             <div class="flex justify-center mt-4">
@@ -100,7 +100,7 @@
             </div>
 
             <p class="text-base text-gray-700 mt-2">
-              Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a href="/ruta-del-archivo" class="text-blue-500 hover:underline">Descargar Adjuntos</a>
+              Obtenga más información acerca de la postulación de las propuestas y la convocatoria: <a href="/ruta-del-archivo" class="text-blue-500 hover:underline">Descargar Documentos</a>
             </p>
 
             <div class="flex justify-center mt-4">

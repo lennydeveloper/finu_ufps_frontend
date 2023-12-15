@@ -38,10 +38,9 @@ export default {
         codigo: '',
         programa: null,
       }
-    },
-    cancelar() {
-      this.limpiarFormulario()
-      this.$router.push('/')
+      this.$router.push({
+        name: 'Login',
+      })
     },
     register() {
       const formData = new FormData()
@@ -173,8 +172,9 @@ export default {
                 Crear
               </button>
               <button
+                type="button"
                 class="w-28 px-4 py-2 ml-3 text-white rounded-md focus:outline-none focus:bg-gray-700"
-                style="background-color: #DD9239;" @click="cancelar"
+                style="background-color: #DD9239;" @click="limpiarFormulario"
               >
                 Cancelar
               </button>

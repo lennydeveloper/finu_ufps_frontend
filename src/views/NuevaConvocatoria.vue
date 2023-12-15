@@ -3,6 +3,9 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 interface Convocatoria {
   titulo: string
@@ -19,8 +22,6 @@ const selectedFile = ref(null)
 
 function handleFileUpload(event) {
   selectedFile.value = event.target.files[0]
-  // eslint-disable-next-line no-console
-  console.log(selectedFile.value)
 }
 
 const convocatoria = ref<Convocatoria>({
@@ -81,6 +82,9 @@ function register() {
           fecha_publicacion_resultados: formatDate(new Date()),
           tipo_convocatoria: 'semillero',
         }
+        router.push({
+          path: '/convocatorias',
+        })
       }
     })
     .catch((err) => {
@@ -204,7 +208,7 @@ function register() {
               </div>
 
               <div>
-                <label class="text-gray-700" for="emailAddress">Adjuntos</label>
+                <label class="text-gray-700" for="emailAddress">Documentos</label>
                 <input
                   required
                   class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none"
@@ -220,7 +224,7 @@ function register() {
                     Semillero (docentes y estudiantes)
                   </option>
                   <option value="grupo">
-                    Grupo (estudiantes)
+                    Grupo (docentes)
                   </option>
                 </select>
               </div>
