@@ -2,8 +2,13 @@
 <!-- eslint-disable no-console -->
 <script>
 import axios from 'axios'
+import { useStore } from 'vuex'
 
 export default {
+  setup() {
+    const store = useStore()
+    return { store }
+  },
   data() {
     return {
       email: 'email@example.com',
@@ -22,7 +27,7 @@ export default {
         .then((result) => {
           const data = result.data
           localStorage.setItem('user', JSON.stringify(data))
-          this.$store.commit('guardarUsuario', result.data)
+          this.$store.commit('guardarUsuario', data)
           if (data.rol.id === 1) {
             this.$router.push({
               name: 'Dashboard',
@@ -35,7 +40,8 @@ export default {
           }
         })
         .catch((err) => {
-          alert(err.response.data)
+          console.log(err)
+          // alert(err.response.data)
         })
     },
   },

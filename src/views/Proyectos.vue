@@ -107,11 +107,6 @@ export default {
                     Monto financiado
                   </th>
                   <th
-                    class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100 border-b border-gray-200"
-                  >
-                    Estado
-                  </th>
-                  <th
                     class="px-6 py-3 bg-gray-100 border-b border-gray-200"
                   />
                 </tr>
@@ -131,7 +126,7 @@ export default {
                     class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
                   >
                     <div class="text-sm leading-5 text-gray-900">
-                      {{ item.proyecto.length > 20 ? `${item.proyecto.slice(0, 20)}...` : item.proyecto }}
+                      {{ item.proyecto ? item.proyecto.length > 20 ? `${item.proyecto.slice(0, 20)}...` : item.proyecto : '' }}
                     </div>
                   </td>
                   <td
@@ -164,14 +159,6 @@ export default {
                     class="px-6 py-4 text-sm leading-5 text-gray-500 border-b border-gray-200 whitespace-nowrap"
                   >
                     {{ item.monto_financiado_finu ?? 0 }}
-                  </td>
-
-                  <td
-                    class="px-6 py-4 border-b border-gray-200 whitespace-nowrap"
-                  >
-                    <span
-                      class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-                    >{{ 'Activo' }}</span>
                   </td>
 
                   <td

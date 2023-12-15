@@ -5,6 +5,7 @@ import { useSidebar } from '../composables/useSidebar'
 
 export default {
   setup() {
+    // const user = store.state.user
     const { isOpen } = useSidebar()
     const activeClass = ref(
       'bg-gray-600 border-gray-600 bg-opacity-25 text-gray-800',
@@ -16,7 +17,7 @@ export default {
   },
   data() {
     return {
-      user: {},
+      user: null,
     }
   },
   beforeMount() {

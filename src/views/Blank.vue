@@ -463,7 +463,7 @@ export default {
       </h2>
       <Apexchart type="bar" height="500" class="mt-4" style="width: 700px" :options="chartOptions" :series="proyectoSeries" />
       <h2 class="text-sm font-medium text-gray-700 uppercase italic">
-        La cantidad de proyectos registrados en la plataforma entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de {{ proyectoSeries[0].data.reduce((a, b) => a + b, 0) }}
+        La cantidad de proyectos registrados en la plataforma entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de 123324
       </h2>
       <div class="lg:flex lg:justify-between">
       <!-- #1 chart -->
@@ -507,7 +507,7 @@ export default {
       </h2>
       <Apexchart type="bar" height="500" class="mt-4" style="width: 700px" :options="chartPresupuesto" :series="presupuestoSeries" />
       <h2 class="text-sm font-medium text-gray-700 uppercase italic">
-        El total de presupuesto financiado entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de ${{ new Intl.NumberFormat('es-CO').format(presupuestoSeries[0].data.reduce((a, b) => a + b, 0)) }}
+        El total de presupuesto financiado entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de $123.456
       </h2>
       <div class="lg:flex lg:justify-between">
       <!-- #1 chart -->
