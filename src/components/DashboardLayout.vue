@@ -1,6 +1,15 @@
-<script setup lang="ts">
+<!-- eslint-disable no-console -->
+<script>
 import Sidebar from './Sidebar.vue'
 import Header from './Header.vue'
+
+export default {
+  components: {
+    Sidebar,
+    // eslint-disable-next-line vue/no-reserved-component-names
+    Header,
+  },
+}
 </script>
 
 <template>
