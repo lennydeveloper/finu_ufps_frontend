@@ -148,7 +148,9 @@ export default {
       axios.post('http://localhost:8000/update/calificacion-propuesta', formData, { headers })
         .then((result) => {
           alert(result.data)
-          this.$router.go(0)
+          this.$router.push({
+            name: 'Proyectos',
+          })
         })
         .catch((err) => {
           alert(err.response.data)

@@ -25,6 +25,8 @@ export default {
       totalDocentes: 0,
       totalEstudiantes: 0,
       totalGruposInv: 0,
+      proyectoSeries: [],
+      presupuestoSeries: [],
       series: [{
         name: 'Net Profit',
         data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
@@ -52,7 +54,7 @@ export default {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '55%',
+            columnWidth: '60%',
             endingShape: 'rounded',
           },
         },
@@ -65,39 +67,65 @@ export default {
           colors: ['transparent'],
         },
         xaxis: {
-          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+          categories: [new Date().getFullYear() - 5, new Date().getFullYear() - 4, new Date().getFullYear() - 3, new Date().getFullYear() - 2, new Date().getFullYear() - 1, new Date().getFullYear()],
         },
         yaxis: {
           title: {
-            text: '$ (thousands)',
+            text: 'Proyectos',
           },
         },
         fill: {
           opacity: 1,
+          colors: ['#F44336'],
         },
         tooltip: {
           y: {
             formatter(val) {
-              return `$ ${val} thousands`
+              return `${val} proyecto${val > 1 ? 's' : ''}`
             },
           },
         },
       },
-      // chartData: {
-      // //   labels: [ 'January', 'February', 'March' ],
-      // //   datasets: [ { data: [40, 20, 12] } ]
-      //   labels: ['Dato1', 'Dato2', 'Dato3', 'Dato4', 'Dato5'],
-      //   datasets: [
-      //     {
-      //       backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#FF007F'],
-      //       data: [140, 120, 100, 80, 60],
-      //     },
-      //   ],
-      // },
-      // chartOptions: {
-      //   responsive: true,
-      //   maintainAspectRatio: false,
-      // },
+      chartPresupuesto: {
+        chart: {
+          type: 'bar',
+          height: 350,
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '60%',
+            endingShape: 'rounded',
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: [new Date().getFullYear() - 5, new Date().getFullYear() - 4, new Date().getFullYear() - 3, new Date().getFullYear() - 2, new Date().getFullYear() - 1, new Date().getFullYear()],
+        },
+        yaxis: {
+          title: {
+            text: 'Presupuesto',
+          },
+        },
+        fill: {
+          opacity: 1,
+          colors: ['#DAA520'],
+        },
+        tooltip: {
+          y: {
+            formatter(val) {
+              return `COP $ ${new Intl.NumberFormat('es-CO').format(val)}`
+            },
+          },
+        },
+      },
     }
   },
   beforeCreate() {
@@ -112,6 +140,18 @@ export default {
         this.totalGruposInv = data.grupos
       })
   },
+  beforeMount() {
+    axios.get('http://localhost:8000/dashboard/proyectos-ejecutados')
+      .then((result) => {
+        const data = result.data
+        this.proyectoSeries = [
+          { name: 'Cantidad de proyectos por año', data: data.proyectos.map(e => e == null ? 0 : e) },
+        ]
+        this.presupuestoSeries = [
+          { name: 'Presupuesto financiado por año', data: data.presupuesto.map(e => e == null ? 0 : e) },
+        ]
+      })
+  },
 }
 </script>
 
@@ -122,7 +162,7 @@ export default {
         <div
           class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm"
         >
-          <div class="p-3 bg-indigo-600 bg-opacity-75 rounded-full">
+          <div class="p-3 bg-finu-red bg-opacity-75 rounded-full">
             <svg
               class="w-8 h-8 text-white"
               viewBox="0 0 28 30"
@@ -171,7 +211,7 @@ export default {
         <div
           class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm"
         >
-          <div class="p-3 bg-indigo-600 bg-opacity-75 rounded-full">
+          <div class="p-3 bg-finu-red bg-opacity-75 rounded-full">
             <svg
               class="w-8 h-8 text-white"
               viewBox="0 0 28 30"
@@ -220,7 +260,7 @@ export default {
         <div
           class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm"
         >
-          <div class="p-3 bg-indigo-600 bg-opacity-75 rounded-full">
+          <div class="p-3 bg-finu-red bg-opacity-75 rounded-full">
             <svg
               class="w-8 h-8 text-white"
               viewBox="0 0 28 30"
@@ -256,7 +296,7 @@ export default {
 
           <div class="mx-5">
             <h4 class="text-2xl tracking-tight font-semibold text-gray-700">
-              COP {{ totalPresupuesto }}
+              COP ${{ new Intl.NumberFormat('es-CO').format(totalPresupuesto) }}
             </h4>
             <div class="text-gray-500">
               Presupuesto total de inversión FINU
@@ -271,7 +311,7 @@ export default {
         <div
           class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm"
         >
-          <div class="p-3 bg-indigo-600 bg-opacity-75 rounded-full">
+          <div class="p-3 bg-finu-red bg-opacity-75 rounded-full">
             <svg
               class="w-8 h-8 text-white"
               viewBox="0 0 28 30"
@@ -320,7 +360,7 @@ export default {
         <div
           class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm"
         >
-          <div class="p-3 bg-indigo-600 bg-opacity-75 rounded-full">
+          <div class="p-3 bg-finu-red bg-opacity-75 rounded-full">
             <svg
               class="w-8 h-8 text-white"
               viewBox="0 0 28 30"
@@ -369,7 +409,7 @@ export default {
         <div
           class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm"
         >
-          <div class="p-3 bg-indigo-600 bg-opacity-75 rounded-full">
+          <div class="p-3 bg-finu-red bg-opacity-75 rounded-full">
             <svg
               class="w-8 h-8 text-white"
               viewBox="0 0 28 30"
@@ -415,16 +455,17 @@ export default {
       </div>
     </div>
   </div>
-  <!-- componente local -->
-  <div class="mt-10 mb-3">
-    <h2 class="text-lg font-semibold text-gray-700 uppercase">
-      número de proyectos ejecutados 2019 - 2023
-    </h2>
-    <Apexchart type="bar" height="500" class="mt-4" style="width: 100%;" :options="chartOptions" :series="series" />
-    <h2 class="text-sm font-medium text-gray-700 uppercase italic">
-      El número de proyectos aprobados entre los años { anio1 } - { anio2 } por los grupos de investigacion adscritos, y que apoyan el programa de { Nombre Programa } es de { Cantidad } proyectos.
-    </h2>
-    <div class="lg:flex lg:justify-between">
+  <div class="flex flex-col xl:flex-row xl:justify-between">
+    <!-- graph 1 -->
+    <div class="mt-10 mb-3">
+      <h2 class="text-lg font-semibold text-gray-700 uppercase">
+        Cantidad de proyectos anuales {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }}
+      </h2>
+      <Apexchart type="bar" height="500" class="mt-4" style="width: 700px" :options="chartOptions" :series="proyectoSeries" />
+      <h2 class="text-sm font-medium text-gray-700 uppercase italic">
+        La cantidad de proyectos registrados en la plataforma entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de {{ proyectoSeries[0].data.reduce((a, b) => a + b, 0) }}
+      </h2>
+      <div class="lg:flex lg:justify-between">
       <!-- #1 chart -->
       <!-- <div class="p-4 bg-zinc-50 border border-slate-300 lg:w-1/2 w-full">
         <h4 class="text-gray-600">
@@ -456,6 +497,51 @@ export default {
           />
         </div>
       </div> -->
+      </div>
+    </div>
+
+    <!-- graph 2 -->
+    <div class="mt-10 mb-3">
+      <h2 class="text-lg font-semibold text-gray-700 uppercase">
+        Presupuesto financiado por el FINU {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }}
+      </h2>
+      <Apexchart type="bar" height="500" class="mt-4" style="width: 700px" :options="chartPresupuesto" :series="presupuestoSeries" />
+      <h2 class="text-sm font-medium text-gray-700 uppercase italic">
+        El total de presupuesto financiado entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de ${{ new Intl.NumberFormat('es-CO').format(presupuestoSeries[0].data.reduce((a, b) => a + b, 0)) }}
+      </h2>
+      <div class="lg:flex lg:justify-between">
+      <!-- #1 chart -->
+      <!-- <div class="p-4 bg-zinc-50 border border-slate-300 lg:w-1/2 w-full">
+        <h4 class="text-gray-600">
+          Dummy text
+        </h4>
+        <div class="mt-2">
+          <Pie
+            id="my-chart-id"
+            :options="chartOptions"
+            :data="chartData"
+            :width="400"
+            :height="400"
+          />
+        </div>
+      </div> -->
+
+      <!-- #2 chart -->
+      <!-- <div class="p-4 bg-zinc-50 border border-slate-300 lg:w-1/2 lg:ml-8 w-full mt-4 lg:mt-0">
+        <h4 class="text-gray-600">
+          Dummy text
+        </h4>
+        <div class="mt-2">
+          <Pie
+            id="my-chart-id"
+            :options="chartOptions"
+            :data="chartData"
+            :width="400"
+            :height="400"
+          />
+        </div>
+      </div> -->
+      </div>
     </div>
   </div>
 </template>
