@@ -190,8 +190,9 @@ export default {
                 Crear
               </button>
               <button
-                class="w-28 px-4 py-2 ml-3 text-white rounded-md focus:outline-none focus:bg-gray-700"
-                style="background-color: #DD9239;" @click="cancelarRegistro"
+                type="button"
+                class="p-3 px-6 py-3 ml-2 text-finu-red bg-transparent rounded-lg focus:outline-none hover:bg-gray-100"
+                @click="cancelarRegistro"
               >
                 Cancelar
               </button>

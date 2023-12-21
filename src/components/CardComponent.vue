@@ -14,6 +14,7 @@ export default {
         },
       })
     }
+
     function postularConvocatoria() {
       router.push({
         path: '/registro-propuesta',
@@ -22,7 +23,11 @@ export default {
         },
       })
     }
-    return { postularConvocatoria, verPropuestas }
+
+    function editarConvocatoria() {
+      router.push({ path: `/editar-convocatoria/${props.idConvocatoria}` })
+    }
+    return { postularConvocatoria, verPropuestas, editarConvocatoria }
   },
   data() {
     return {
@@ -71,7 +76,7 @@ export default {
             <button v-if="user.rol.id === 1" class="text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="verPropuestas()">
               Ver Propuestas
             </button>
-            <button v-if="user.rol.id === 1" class="ml-2 text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="verPropuestas()">
+            <button v-if="user.rol.id === 1" class="ml-2 text-white px-6 py-2 rounded-md focus:outline-none focus:shadow-outline" style="background-color: #DD4B39;" @click="editarConvocatoria()">
               Editar Convocatoria
             </button>
           </div>
