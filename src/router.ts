@@ -71,6 +71,11 @@ const routes: RouteRecordRaw[] = [
     component: NuevaConvocatoria,
   },
   {
+    path: '/editar-convocatoria/:id',
+    name: 'EditarConvocatoria',
+    component: NuevaConvocatoria,
+  },
+  {
     path: '/ui',
     name: 'UIElements',
     component: UIElements,
