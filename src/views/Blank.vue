@@ -27,6 +27,8 @@ export default {
       totalGruposInv: 0,
       proyectoSeries: [],
       presupuestoSeries: [],
+      chartTotalPresupuesto: 0,
+      chartTotalProyectos: 0,
       series: [{
         name: 'Net Profit',
         data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
@@ -139,8 +141,7 @@ export default {
         this.totalEstudiantes = data.estudiantes
         this.totalGruposInv = data.grupos
       })
-  },
-  beforeMount() {
+
     axios.get('http://localhost:8000/dashboard/proyectos-ejecutados')
       .then((result) => {
         const data = result.data
@@ -150,6 +151,8 @@ export default {
         this.presupuestoSeries = [
           { name: 'Presupuesto financiado por año', data: data.presupuesto.map(e => e == null ? 0 : e) },
         ]
+        this.chartTotalPresupuesto = data.total_presupuesto
+        this.chartTotalProyectos = data.total_proyectos
       })
   },
 }
@@ -463,41 +466,8 @@ export default {
       </h2>
       <Apexchart type="bar" height="500" class="mt-4" style="width: 700px" :options="chartOptions" :series="proyectoSeries" />
       <h2 class="text-sm font-medium text-gray-700 uppercase italic">
-        La cantidad de proyectos registrados en la plataforma entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de 309
+        La cantidad de proyectos registrados en la plataforma entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de {{ chartTotalProyectos }}
       </h2>
-      <div class="lg:flex lg:justify-between">
-      <!-- #1 chart -->
-      <!-- <div class="p-4 bg-zinc-50 border border-slate-300 lg:w-1/2 w-full">
-        <h4 class="text-gray-600">
-          Dummy text
-        </h4>
-        <div class="mt-2">
-          <Pie
-            id="my-chart-id"
-            :options="chartOptions"
-            :data="chartData"
-            :width="400"
-            :height="400"
-          />
-        </div>
-      </div> -->
-
-      <!-- #2 chart -->
-      <!-- <div class="p-4 bg-zinc-50 border border-slate-300 lg:w-1/2 lg:ml-8 w-full mt-4 lg:mt-0">
-        <h4 class="text-gray-600">
-          Dummy text
-        </h4>
-        <div class="mt-2">
-          <Pie
-            id="my-chart-id"
-            :options="chartOptions"
-            :data="chartData"
-            :width="400"
-            :height="400"
-          />
-        </div>
-      </div> -->
-      </div>
     </div>
 
     <!-- graph 2 -->
@@ -507,41 +477,8 @@ export default {
       </h2>
       <Apexchart type="bar" height="500" class="mt-4" style="width: 700px" :options="chartPresupuesto" :series="presupuestoSeries" />
       <h2 class="text-sm font-medium text-gray-700 uppercase italic">
-        El total de presupuesto financiado entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de $172.655.950
+        El total de presupuesto financiado entre los años {{ new Date().getFullYear() - 5 }} - {{ new Date().getFullYear() }} es de ${{ new Intl.NumberFormat('es-CO').format(chartTotalPresupuesto) }}
       </h2>
-      <div class="lg:flex lg:justify-between">
-      <!-- #1 chart -->
-      <!-- <div class="p-4 bg-zinc-50 border border-slate-300 lg:w-1/2 w-full">
-        <h4 class="text-gray-600">
-          Dummy text
-        </h4>
-        <div class="mt-2">
-          <Pie
-            id="my-chart-id"
-            :options="chartOptions"
-            :data="chartData"
-            :width="400"
-            :height="400"
-          />
-        </div>
-      </div> -->
-
-      <!-- #2 chart -->
-      <!-- <div class="p-4 bg-zinc-50 border border-slate-300 lg:w-1/2 lg:ml-8 w-full mt-4 lg:mt-0">
-        <h4 class="text-gray-600">
-          Dummy text
-        </h4>
-        <div class="mt-2">
-          <Pie
-            id="my-chart-id"
-            :options="chartOptions"
-            :data="chartData"
-            :width="400"
-            :height="400"
-          />
-        </div>
-      </div> -->
-      </div>
     </div>
   </div>
 </template>
